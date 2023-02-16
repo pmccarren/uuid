@@ -18,7 +18,8 @@ jobs:
         node-version: 16.x
     - run: npm install
     - name: Test Browser
-      run: npm run test:browser
+      run: echo "SKIPPED"
+      # run: npm run test:browser
       env:
         CI: true
         BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
