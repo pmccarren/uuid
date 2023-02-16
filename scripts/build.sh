@@ -28,19 +28,24 @@ mkdir -p "$DIR"
 #   └── bin (<-- Node.js CLI)
 
 # Transpile CommonJS versions of files for node
+echo "commonjsNode"
 babel --env-name commonjsNode src --source-root src --out-dir "$DIR" --copy-files --quiet
 
 # Transpile CommonJS versions of files for the browser
+echo "commonjsBrowser"
 babel --env-name commonjsBrowser src --source-root src --out-dir "$DIR/commonjs-browser" \
     --copy-files --quiet
 
 # Transpile ESM versions of files for the browser
+echo "esmBrowser"
 babel --env-name esmBrowser src --source-root src --out-dir "$DIR/esm-browser" --copy-files --quiet
 
 # Transpile ESM versions of files for node
+echo "esmNode"
 babel --env-name esmNode src --source-root src --out-dir "$DIR/esm-node" --copy-files --quiet
 
 # No need to have the CLI files in the esm build
+echo "remove the files"
 rm -rf "$DIR/commonjs-browser/bin"
 rm -rf "$DIR/commonjs-browser/uuid-bin.js"
 rm -rf "$DIR/esm-browser/bin"
