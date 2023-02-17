@@ -4,6 +4,11 @@
 ROOT="$(pwd)/$(dirname "$0")/.."
 cd "$ROOT" || exit 1
 
+echo "node version: $(node -v)"
+echo "npm version: $(npm -v)"
+
+npm help
+
 echo "ROOT: >${ROOT}< >$(npm bin)<"
 
 PATH="$(npm bin):$PATH"
