@@ -102,7 +102,7 @@
     "pretest:browser": "optional-dev-dependency && npm run build && npm-run-all --parallel examples:browser:**",
     "test:browser": "wdio run ./wdio.conf.js",
     "pretest:node": "npm run build",
-    "test:node": "npm-run-all --parallel examples:node:**",
+    "test:node": "npm-run-all examples:node:**",
     "test:pack": "./scripts/testpack.sh",
     "pretest:benchmark": "npm run build",
     "test:benchmark": "cd examples/benchmark && npm install && npm test",

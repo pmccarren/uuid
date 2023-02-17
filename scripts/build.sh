@@ -4,11 +4,21 @@
 ROOT="$(pwd)/$(dirname "$0")/.."
 cd "$ROOT" || exit 1
 
-PATH="$(npm bin):$PATH"
+echo "node version: $(node -v)"
+echo "npm version: $(npm -v)"
+
+npm help
+
+echo "ROOT: >${ROOT}< >$(npm bin)<"
+
+PATH="$(npm root)/.bin:$PATH"
 DIR="$ROOT/dist"
 
 # Clean up output dir
+echo "clean up output dir: >${DIR}<"
 rm -rf "$DIR"
+
+echo "create dir"
 mkdir -p "$DIR"
 
 # We ship 4 builds of this library: ESM and CommonJS, each for Node.js and the Browser.
@@ -26,19 +36,24 @@ mkdir -p "$DIR"
 #   └── bin (<-- Node.js CLI)
 
 # Transpile CommonJS versions of files for node
+echo "commonjsNode"
 babel --env-name commonjsNode src --source-root src --out-dir "$DIR" --copy-files --quiet
 
 # Transpile CommonJS versions of files for the browser
+echo "commonjsBrowser"
 babel --env-name commonjsBrowser src --source-root src --out-dir "$DIR/commonjs-browser" \
     --copy-files --quiet
 
 # Transpile ESM versions of files for the browser
+echo "esmBrowser"
 babel --env-name esmBrowser src --source-root src --out-dir "$DIR/esm-browser" --copy-files --quiet
 
 # Transpile ESM versions of files for node
+echo "esmNode"
 babel --env-name esmNode src --source-root src --out-dir "$DIR/esm-node" --copy-files --quiet
 
 # No need to have the CLI files in the esm build
+echo "remove the files"
 rm -rf "$DIR/commonjs-browser/bin"
 rm -rf "$DIR/commonjs-browser/uuid-bin.js"
 rm -rf "$DIR/esm-browser/bin"
@@ -46,14 +61,12 @@ rm -rf "$DIR/esm-browser/uuid-bin.js"
 rm -rf "$DIR/esm-node/bin"
 rm -rf "$DIR/esm-node/uuid-bin.js"
 
-for FILE in "$DIR"/commonjs-browser/*-browser.js
-do
+for FILE in "$DIR"/commonjs-browser/*-browser.js; do
     echo "Replacing node-specific file for commonjs-browser: $FILE"
     mv "$FILE" "${FILE/-browser.js/.js}"
 done
 
-for FILE in "$DIR"/esm-browser/*-browser.js
-do
+for FILE in "$DIR"/esm-browser/*-browser.js; do
     echo "Replacing node-specific file for esm-browser: $FILE"
     mv "$FILE" "${FILE/-browser.js/.js}"
 done
