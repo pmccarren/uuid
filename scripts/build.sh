@@ -11,7 +11,7 @@ npm help
 
 echo "ROOT: >${ROOT}< >$(npm bin)<"
 
-PATH="$(npm bin):$PATH"
+PATH="$(npm root)/.bin:$PATH"
 DIR="$ROOT/dist"
 
 # Clean up output dir
