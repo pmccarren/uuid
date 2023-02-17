@@ -10,7 +10,10 @@ PATH="$(npm bin):$PATH"
 DIR="$ROOT/dist"
 
 # Clean up output dir
+echo "clean up output dir: >${DIR}<"
 rm -rf "$DIR"
+
+echo "create dir"
 mkdir -p "$DIR"
 
 # We ship 4 builds of this library: ESM and CommonJS, each for Node.js and the Browser.
