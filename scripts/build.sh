@@ -4,7 +4,7 @@
 ROOT="$(pwd)/$(dirname "$0")/.."
 cd "$ROOT" || exit 1
 
-echo "ROOT: ${ROOT}"
+echo "ROOT: >${ROOT}< >$(npm bin)<"
 
 PATH="$(npm bin):$PATH"
 DIR="$ROOT/dist"
