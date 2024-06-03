@@ -2,14 +2,15 @@
   -- This file is auto-generated from README_js.md. Changes should be made there.
   -->
 
+
 # uuid [![CI](https://github.com/uuidjs/uuid/workflows/CI/badge.svg)](https://github.com/uuidjs/uuid/actions?query=workflow%3ACI) [![Browser](https://github.com/uuidjs/uuid/workflows/Browser/badge.svg)](https://github.com/uuidjs/uuid/actions?query=workflow%3ABrowser)
 
 For the creation of [RFC4122](https://www.ietf.org/rfc/rfc4122.txt) UUIDs
 
-- **Complete** - Support for RFC4122 version 1, 3, 4, and 5 UUIDs
+- **Complete** - Support for RFC4122 version 1, 3, 4, 5, and 7 UUIDs
 - **Cross-platform** - Support for ...
   - CommonJS, [ECMAScript Modules](#ecmascript-modules) and [CDN builds](#cdn-builds)
-  - Node 12, 14, 16, 18
+  - NodeJS 12+ ([LTS releases](https://github.com/nodejs/Release))
   - Chrome, Safari, Firefox, Edge browsers
   - Webpack and rollup.js module bundlers
   - [React Native / Expo](#react-native--expo)
@@ -17,11 +18,9 @@ For the creation of [RFC4122](https://www.ietf.org/rfc/rfc4122.txt) UUIDs
 - **Small** - Zero-dependency, small footprint, plays nice with "tree shaking" packagers
 - **CLI** - Includes the [`uuid` command line](#command-line) utility
 
-> **Note**
-> Upgrading from `uuid@3`? Your code is probably okay, but check out [Upgrading From `uuid@3`](#upgrading-from-uuid3) for details.
+> **Note** Upgrading from `uuid@3`? Your code is probably okay, but check out [Upgrading From `uuid@3`](#upgrading-from-uuid3) for details.
 
-> **Note**
-> Only interested in creating a version 4 UUID? You might be able to use [`cypto.randomUUID()`](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/randomUUID), eliminating the need to install this library.
+> **Note** Only interested in creating a version 4 UUID? You might be able to use [`crypto.randomUUID()`](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/randomUUID), eliminating the need to install this library.
 
 ## Quickstart
 
@@ -60,6 +59,7 @@ For timestamp UUIDs, namespace UUIDs, and other options read on ...
 | [`uuid.v3()`](#uuidv3name-namespace-buffer-offset) | Create a version 3 (namespace w/ MD5) UUID |  |
 | [`uuid.v4()`](#uuidv4options-buffer-offset) | Create a version 4 (random) UUID |  |
 | [`uuid.v5()`](#uuidv5name-namespace-buffer-offset) | Create a version 5 (namespace w/ SHA-1) UUID |  |
+| [`uuid.v7()`](#uuidv7options-buffer-offset) | Create a version 7 (Unix Epoch time-based) UUID | `experimental support` |
 | [`uuid.validate()`](#uuidvalidatestr) | Test a string to see if it is a valid UUID | New in `uuid@8.3` |
 | [`uuid.version()`](#uuidversionstr) | Detect RFC version of a UUID | New in `uuid@8.3` |
 
@@ -252,6 +252,29 @@ import { v5 as uuidv5 } from 'uuid';
 uuidv5('https://www.w3.org/', uuidv5.URL); // ⇨ 'c106a26a-21bb-5538-8bf2-57095d1976c1'
 ```
 
+### uuid.v7([options[, buffer[, offset]]])
+
+Create an RFC version 7 (random) UUID
+
+|  |  |
+| --- | --- |
+| [`options`] | `Object` with one or more of the following properties: |
+| [`options.msecs`] | RFC "timestamp" field (`Number` of milliseconds, unix epoch) |
+| [`options.random`] | `Array` of 16 random bytes (0-255) |
+| [`options.rng`] | Alternative to `options.random`, a `Function` that returns an `Array` of 16 random bytes (0-255) |
+| [`options.seq`] | 31 bit monotonic sequence counter as `Number` between 0 - 0x7fffffff |
+| [`buffer`] | `Array \| Buffer` If specified, uuid will be written here in byte-form, starting at `offset` |
+| [`offset` = 0] | `Number` Index to start writing UUID bytes in `buffer` |
+| _returns_ | UUID `String` if no `buffer` is specified, otherwise returns `buffer` |
+
+Example:
+
+```javascript
+import { v7 as uuidv7 } from 'uuid';
+
+uuidv7(); // ⇨ '01695553-c90c-7aad-9bdd-330d7b3dcb6d'
+```
+
 ### uuid.validate(str)
 
 Test a string to see if it is a valid UUID
@@ -326,6 +349,7 @@ Usage:
   uuid v3 <name> <namespace uuid>
   uuid v4
   uuid v5 <name> <namespace uuid>
+  uuid v7
   uuid --help
 
 Note: <namespace uuid> may be "URL" or "DNS" to use the corresponding UUIDs
@@ -462,5 +486,6 @@ const uuid = require('uuid'); // <== REMOVED!
 
 This usage pattern was already discouraged in `uuid@3` and has been removed in `uuid@7`.
 
-----
-Markdown generated from [README_js.md](README_js.md) by [![RunMD Logo](https://i.imgur.com/h0FVyzU.png)](https://github.com/broofa/runmd)
+---
+
+Markdown generated from [README_js.md](README_js.md) by <a href="https://github.com/broofa/runmd"><image height="12px" src="https://camo.githubusercontent.com/5c7c603cd1e6a43370b0a5063d457e0dabb74cf317adc7baba183acb686ee8d0/687474703a2f2f692e696d6775722e636f6d2f634a4b6f3662552e706e67" /></a>
